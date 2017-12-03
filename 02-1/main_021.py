@@ -24,6 +24,6 @@ if __name__ == '__main__':
     print(checksum(parse(lines)))
 
 
-class Tests(unittest.TestCase):
+class Tests021(unittest.TestCase):
     def test_1(self):
         self.assertEqual(18, checksum(parse(['5 1 9 5', '7 5 3', '2 4 6 8'])))

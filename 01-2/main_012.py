@@ -16,7 +16,7 @@ if __name__ == '__main__':
     print(count([int(x) for x in sys.argv[1]]))
 
 
-class Tests(unittest.TestCase):
+class Tests012(unittest.TestCase):
     def test_1(self):
         self.assertEqual(6, count([1, 2, 1, 2]))
 
