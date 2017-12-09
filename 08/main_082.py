@@ -177,6 +177,7 @@ class Tests082(unittest.TestCase):
             (
                 {
                     'a': 1,
+                    'b': 0,
                     'c': -10
                 },
                 10
