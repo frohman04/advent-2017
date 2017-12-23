@@ -61,7 +61,7 @@ class RegRegOp(Op):
         self._reg2 = reg2
 
     def __repr__(self):
-        return '{}({}, {})'.format(type(self).__name__, self._reg1, self._reg1)
+        return '{}({}, {})'.format(type(self).__name__, self._reg1, self._reg2)
 
     def __eq__(self, other):
         return type(self) == type(other) and self._reg1 == other._reg1 and self._reg2 == other._reg2
