@@ -1,4 +1,3 @@
-from copy import deepcopy
 import fileinput
 import logging
 from typing import Dict, List, Set, Tuple
@@ -16,31 +15,27 @@ def flatten(l):
 def build(pieces: Dict[int, Set[Tuple[int, int]]]) -> Tuple[List[Tuple[int, int]], int]:
     def build(bridge: List[Tuple[int, int]],
               connect: int,
-              remaining: Dict[int, Set[Tuple[int, int]]]) -> Tuple[List[Tuple[int, int]], int]:
-        next = remaining[connect]
-        if len(next) == 0:
+              pieces: Dict[int, Set[Tuple[int, int]]],
+              used: Set[Tuple[int, int]]) -> Tuple[List[Tuple[int, int]], int]:
+        next = pieces[connect]
+        if all(x in used for x in next):
             strength = sum(flatten(bridge))
             logger.debug('Found bridge ({}): {}'.format(strength, bridge))
             return bridge, strength
         else:
             best = None
-            for element in next:
+            for element in [x for x in next if x not in used]:
                 if element[0] == connect:
                     updated_connect = element[1]
                 else:
                     updated_connect = element[0]
 
-                updated_remaining = deepcopy(remaining)
-                updated_remaining[connect].remove(element)
-                if element[0] != element[1]:
-                    updated_remaining[updated_connect].remove(element)
-
-                result = build(bridge + [element], updated_connect, updated_remaining)
+                result = build(bridge + [element], updated_connect, pieces, set(list(used) + [element]))
                 if best is None or best[1] < result[1]:
                     best = result
             return best
 
-    return build([], 0, pieces)
+    return build([], 0, pieces, set())
 
 
 def parse(lines: List[str]) -> Dict[int, Set[Tuple[int, int]]]:
